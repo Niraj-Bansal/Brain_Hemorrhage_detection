@@ -41,13 +41,17 @@ def predict():
     output_mask = tf.image.grayscale_to_rgb(output_mask)
     output_image = tf.keras.preprocessing.image.array_to_img(output_mask)
     
-    # put_text("successful")
     put_image(output_image)
     
 app.add_url_rule('/tool', 'webio_view', webio_view(predict), methods=['GET', 'POST', 'OPTIONS'])
 
         
-app.run(host='localhost', port=80)
+# app.run(host='localhost', port=80)
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 #     app.run(debug=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--port", type=int, default=8080)
+    args = parser.parse_args()
+    
+    start_server(predict, port=agrs.port)
